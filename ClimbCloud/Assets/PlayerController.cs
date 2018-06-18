@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour {
 		//ジャンプ
         if (Input.GetKeyDown(KeyCode.Space) && this.rigid2D.velocity.y == 0)
         {
+            this.animator.SetTrigger("JumpTrigger");
             this.rigid2D.AddForce(transform.up * this.jumpForce);
         }
 
@@ -44,8 +45,14 @@ public class PlayerController : MonoBehaviour {
         }
 
         //プレイヤーの動きに応じてアニメーションを変える
-        this.animator.speed = speedx / 2.0f;
-
+        if (this.rigid2D.velocity.y == 0)
+        {
+            this.animator.speed = speedx / 2.0f;
+        }
+        else
+        {
+            this.animator.speed = 1.0f;
+        }
         if (transform.position.y<-10)
         {
             SceneManager.LoadScene("GameScene");
